@@ -18,11 +18,16 @@ class GamesController < ApplicationController
     end
 
     def setup
-
+        format_return = Ship.create_new_ship(setup_params)
+        render json: format_return
     end
 
     private
         def game_params
             params.permit(:player_one, :player_two)
+        end
+
+        def setup_params
+            params.permit(:session_id, :ship, :coordinate, :direction, :player) 
         end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_10_232531) do
+ActiveRecord::Schema.define(version: 2021_05_11_165002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -23,7 +23,20 @@ ActiveRecord::Schema.define(version: 2021_05_10_232531) do
     t.uuid "session_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "next_player"
     t.index ["session_id"], name: "index_games_on_session_id", unique: true
+  end
+
+  create_table "ships", force: :cascade do |t|
+    t.boolean "is_sunk", default: false
+    t.integer "life_points"
+    t.integer "ship_type"
+    t.string "coordinates"
+    t.string "player_id"
+    t.string "session_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["session_id", "player_id", "ship_type"], name: "index_ships_on_session_id_and_player_id_and_ship_type", unique: true
   end
 
 end
