@@ -13,12 +13,6 @@ RSpec.describe Ship, type: :model do
   end
 
   describe "Ship Methods" do
-    it "should return all ships for game" do
-      resp = Ship.get_all_ships_from_game(@ship1.session_id)
-
-      expect(resp.length).to eq(1)
-    end
-
     it "should get a game" do
       resp = Ship.get_game(@game1.session_id)
 

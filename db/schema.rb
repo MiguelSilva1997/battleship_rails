@@ -16,11 +16,10 @@ ActiveRecord::Schema.define(version: 2021_05_11_165002) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "games", id: false, force: :cascade do |t|
+  create_table "games", primary_key: "session_id", id: :uuid, default: nil, force: :cascade do |t|
     t.integer "phase", default: 0
     t.string "player_one", null: false
     t.string "player_two", null: false
-    t.uuid "session_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "next_player"

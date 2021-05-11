@@ -1,7 +1,7 @@
 class Game < ApplicationRecord
     self.primary_key = 'session_id'
     
-    has_many :ships, foreign_key: 'session_id'
+    has_many :ships, foreign_key: 'session_id', primary_key: 'session_id'
     before_create :change_players_id, :add_uuid_to_session_id
 
     enum phase: %i[setup play game_over]

@@ -14,7 +14,8 @@ class GamesController < ApplicationController
     end
 
     def play
-    
+        format_return = Turn.create_new_turn(play_params)
+        render json: format_return
     end
 
     def setup
@@ -29,5 +30,9 @@ class GamesController < ApplicationController
 
         def setup_params
             params.permit(:session_id, :ship, :coordinate, :direction, :player) 
+        end
+
+        def play_params
+            params.permit(:coordinate, :player, :session_id)
         end
 end

@@ -1,6 +1,6 @@
 class Ship < ApplicationRecord
     extend ShipHelper
-    belongs_to :game, foreign_key: :session_id
+    belongs_to :game, foreign_key: 'session_id', primary_key: "session_id"
 
     enum ship_type: %i[carrier battleship cruiser submarine destroyer]
 
@@ -15,7 +15,7 @@ class Ship < ApplicationRecord
         )
         is_valid = self.create_ship(params, coordinates) if is_valid
 
-        if self.get_all_ships_from_game(game.session_id).length == 10
+        if game.ships.length == 10
             phase_change = game.update(phase: "play")
         end
             
@@ -49,9 +49,5 @@ class Ship < ApplicationRecord
 
     def self.get_game(session_id)
         return Game.find_by(session_id: session_id)
-    end
-
-    def self.get_all_ships_from_game(session_id)
-        return Ship.where({session_id: session_id})
     end
 end
