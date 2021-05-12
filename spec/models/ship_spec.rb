@@ -30,5 +30,26 @@ RSpec.describe Ship, type: :model do
 
       expect(resp.length).to eq(0)
     end
+
+    it "should return a ship with a coordinate" do
+      resp = Ship.got_hit("A2", @game1.session_id, @game1.player_one)
+
+      expect(resp).to eq(@ship1)
+    end
+
+    it "should return hit update" do
+      resp = @ship1.hit
+
+      expect(resp.life_points).to eq(2)
+      expect(resp.is_sunk).to eq(false)
+    end
+
+    it "should return hit update" do
+      @ship1.hit
+      resp = @ship1.hit
+
+      expect(resp.life_points).to eq(0)
+      expect(resp.is_sunk).to eq(true)
+    end
   end
 end

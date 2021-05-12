@@ -50,4 +50,14 @@ class Ship < ApplicationRecord
     def self.get_game(session_id)
         return Game.find_by(session_id: session_id)
     end
+
+    def self.got_hit(coord, session_id, player_id)
+        return Ship.where("session_id = ? AND player_id = ? AND coordinates LIKE ?", session_id, player_id, "%#{coord}%").first
+    end
+
+    def hit
+        life_points = self.life_points - 1
+        update(life_points: life_points, is_sunk: life_points == 0)
+        return self
+    end
 end
