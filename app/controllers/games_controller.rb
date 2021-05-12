@@ -13,6 +13,11 @@ class GamesController < ApplicationController
         end
     end
 
+    def show
+        game = Game.find(show_params["session_id"])
+        render json: { "phase": game.phase, "players": [game.player_one, game.player_two]}
+    end
+
     def play
         format_return = Turn.create_new_turn(play_params)
         render json: format_return
@@ -34,5 +39,9 @@ class GamesController < ApplicationController
 
         def play_params
             params.permit(:coordinate, :player, :session_id)
+        end
+
+        def show_params
+            params.permit(:session_id)
         end
 end
